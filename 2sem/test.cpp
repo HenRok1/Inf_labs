@@ -4,11 +4,15 @@
 
 using namespace std;
 
-int first_sub(string, string);
+int have_sub(string, string);
 
 int main() {
-    int flag = 0;
     string file_name;
+    string src;
+    string sub1 = "one";
+    string sub2 = "three";
+
+    int flag = 0;
     
     cout << "Enter a file name: " << endl;
     cin >> file_name;
@@ -18,29 +22,40 @@ int main() {
     if (!fin.is_open()) {
         cout << "Error open file"; 
     } else {
-        cout << "File is open" << endl;
-        string str;
-        string sub = "one";
+//        cout << "File is open" << endl;
         
-        while (!fin.eof()) {
-            str = "";
-            getline(fin, str);
-            if (first_sub(str, sub)) {
-                cout << "str has ONE";
-                break;
-            } else {
-                cout << "str not has ONE";
-                break;
+        while (getline(fin, src) and !fin.eof()) {
+            flag++;
+            src = "";
+//            getline(fin, src);
+            if (flag == 1) {
+                if (have_sub(src, sub1)) {
+                    cout << "src has ONE" << endl;
+                    src = "";
+                    flag++;
+                } else {
+                    cout << "src not has ONE" << endl;
+                    src = "";
+                    flag++;
+                }
             }
+            if (flag == 2) {
+                if (have_sub(src, sub2)) {
+                    cout << "src has THREE" << endl;
+                    break;
+                } else {
+                    cout << "src not has THREE" << endl;
+                    break;
+                }    
             }
         }
+    }
 
     fin.close();
     return 0;;
 }
 
-
-int first_sub(string src, string sub) {
+int have_sub(string src, string sub) {
     int start = 0;
     int count = 0;
     int pos = 0;
